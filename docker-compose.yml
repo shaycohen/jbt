@@ -1,0 +1,36 @@
+version: '3'
+services:
+
+
+        #db-0:
+        #        image: bitnami/postgresql-repmgr:11
+                #build: docker-compose.d/postgres/cluster
+                #volumes:
+                #        - /db_data0:/bitnami/postgresql
+                #        environment:
+                #        - POSTGRESQL_POSTGRES_PASSWORD=odoo
+                #        - POSTGRESQL_POSTGRES_USER=odoo
+                #        - POSTGRESQL_USERNAME=odoo
+                #        - POSTGRESQL_PASSWORD=odoo
+                #        - POSTGRESQL_DATABASE=postgres
+                #        - REPMGR_PASSWORD=repmgrpassword
+                #        - REPMGR_PRIMARY_HOST=odoo
+                #        - REPMGR_PARTNER_NODES=db-0
+                #        - REPMGR_NODE_NAME=db-0
+                #- REPMGR_NODE_NETWORK_NAME=db-0
+
+        db:
+           image: postgres:10
+           environment:
+                   - POSTGRES_USER=odoo
+                   - POSTGRES_PASSWORD=odoo
+                   - POSTGRES_DB=postgres
+
+        odoo:
+           image: odoo
+           ports:
+                 - 8069:8069
+           depends_on:
+                   - db
+           links: 
+                 - db:db
